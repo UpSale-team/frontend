@@ -1,0 +1,16 @@
+.contentContainer {
+    max-width: 100px;
+    width: 100%;
+    padding-top: 25px;
+  }
+
+.header {
+height: px;
+border: none; /* Loại bỏ border */
+box-shadow: none; /* Nếu có shadow, cũng bỏ nó đi */
+}
+
+.logoContainer {
+    padding: 5px; 
+    text-align: center; 
+  }
