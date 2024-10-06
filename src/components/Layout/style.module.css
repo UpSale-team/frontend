@@ -4,11 +4,11 @@
     padding-top: 25px;
   }
 
-.header {
-height: px;
-border: none; /* Loại bỏ border */
-box-shadow: none; /* Nếu có shadow, cũng bỏ nó đi */
-}
+  .header {
+    border-bottom: none !important; /* Xóa viền dưới cùng nếu có */
+    box-shadow: none !important; /* Xóa mọi shadow */
+    background-color: transparent; /* Đảm bảo không có màu nền tạo viền ảo */
+  }
 
 .logoContainer {
     padding: 5px; 

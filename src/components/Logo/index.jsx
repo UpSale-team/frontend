@@ -16,7 +16,7 @@ export default function Logo({ size = 40, onTap, variant = "auto" }) {
   return (
     <Flex
       align="center"
-      gap={10}
+      
       onClick={onTap}
       style={{
         cursor: "pointer",
@@ -28,7 +28,7 @@ export default function Logo({ size = 40, onTap, variant = "auto" }) {
         style={{ width: size, height: size }}
       />
       <Title
-        ff="Oswald, sans serif"
+        ff="Roboto, sans-serif"
         order={3}
         c={theme === "dark" ? "#fff" : "#000"}
       >
