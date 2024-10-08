@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 // Mantine styles
 import "@mantine/core/styles.css";
+import '@mantine/tiptap/styles.css';
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(

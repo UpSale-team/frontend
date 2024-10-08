@@ -6,6 +6,8 @@ import { IconPlus } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import appStrings from '../../utils/strings';
 import ProjectCard from '../../components/ProjectCard';
+import YourProjectAction from '../../components/Actions/YourProjectAction';
+
 
 export default function HomePage() {
     const [isNewProjectOpen, newProjectToggle] = useDisclosure(false);
@@ -29,7 +31,20 @@ export default function HomePage() {
             onClose={newProjectToggle.close}
       />
           </Flex>
-          <ProjectCard/> 
+          <ProjectCard
+          // key={index}
+          // id={data.id}
+          // title={data.name}
+          // description={data.description}
+          // alias={data.alias}
+          // members={data.members}
+          // actions={
+            // <YourProjectAction
+              // onAnalysis={() => onAnalysis(data.id)}
+              // onDeleteTap={() => onDeleteTap(data.id)}
+              // />
+          // }
+          /> 
           </Flex>
 
     
