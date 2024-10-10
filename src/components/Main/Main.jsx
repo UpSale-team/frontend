@@ -122,19 +122,29 @@ export default function Main() {
             </Button>
             <Collapse in={openedKnowledge}>
                 <Text>Text Knowledge</Text>
-                <TextInput
-                    placeholder="Upload text file"
-                    value={knowledgeText}
-                    onChange={(event) => setKnowledgeText(event.currentTarget.value)}
-                    style={{ marginBottom: '10px' }}
-                />
+                <Group align="center" style={{ marginBottom: '10px' }}>
+                    <TextInput
+                        placeholder="Enter text knowledge..."
+                        value={knowledgeText}
+                        onChange={(event) => setKnowledgeText(event.currentTarget.value)}
+                        style={{ marginRight: '10px' }}
+                    />
+                    <ActionIcon onClick={() => alert('Upload text file feature coming soon!')}>
+                        <IconPlus />
+                    </ActionIcon>
+                </Group>
                 <Text>CSV Knowledge</Text>
-                <TextInput
-                    placeholder="Upload CSV file"
-                    value={csvFile}
-                    onChange={(event) => setCsvFile(event.currentTarget.value)}
-                    style={{ marginBottom: '10px' }}
-                />
+                <Group align="center" style={{ marginBottom: '10px' }}>
+                    <TextInput
+                        placeholder="Upload CSV file"
+                        value={csvFile}
+                        onChange={(event) => setCsvFile(event.currentTarget.value)}
+                        style={{ marginRight: '10px' }}
+                    />
+                    <ActionIcon onClick={() => alert('Upload CSV file feature coming soon!')}>
+                        <IconPlus />
+                    </ActionIcon>
+                </Group>
             </Collapse>
         </div>
     );
