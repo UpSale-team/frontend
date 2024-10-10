@@ -1,5 +1,9 @@
 import { AppShell, Burger, Group, Textarea, Collapse, Title, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import Aside from '../../components/Preview';
+import Main from '../../components/Main/Main';
+import Header from '../../components/Header';
+import Persona from '../../components/Persona/Persona';
 import { IconChevronDown, IconChevronRight } from '@tabler/icons-react';
 import appStrings from '../../utils/strings';
 import OpeningText from '../ChatExperience/Openingtext';
@@ -17,25 +21,20 @@ export default function Develop() {
         >
 
             <AppShell.Header>
+                
                 <Group h="100%" px="md">
                     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+                    <Header/>
                 </Group>
             </AppShell.Header>
 
             <AppShell.Navbar p="md">
-                <Textarea
-                    variant="unstyled"
-                    label={appStrings.language.develop.title1}
-                    autosize
-                    minRows={50}
-                    maxRows={50}
-                    placeholder={appStrings.language.develop.description}
-                    labelProps={{ style: { fontSize: '18px', fontWeight: 'bold' } }}
-                />
+                <Persona/>
             </AppShell.Navbar>
 
             <AppShell.Main>
-                <Title order={4}>Chat experience</Title>
+               <Main />
+                {/* <Title order={4}>Chat experience</Title>
                 <Button
                     justify='flex-start'
                     size="md"
@@ -49,10 +48,10 @@ export default function Develop() {
                 <Collapse in={opened}>
                     <OpeningText />
                     <QuestionList />
-                </Collapse>
+                </Collapse> */}
             </AppShell.Main>
 
-            <AppShell.Aside p="md">Aside</AppShell.Aside>
+            <AppShell.Aside p="md"><Aside/></AppShell.Aside>
         </AppShell>
     );
 }
