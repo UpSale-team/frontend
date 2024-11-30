@@ -19,6 +19,10 @@ const appRoutes  = [
     element: <LoginPage/>,
     },
     {
+      path: "/404",
+      element: <NotFoundPage />,
+    },
+    {
       path: '/widget-page/:projectId',
       element: <WidgetPage />
     },
