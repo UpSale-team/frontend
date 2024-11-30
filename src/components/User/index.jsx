@@ -3,7 +3,7 @@ import { IconLogout, IconSettings, IconCalendar, IconCrown } from "@tabler/icons
 import useGlobalState from "../../context/global";
 import appStrings from "../../utils/strings";
 import { useNavigate } from "react-router-dom";
-import { useGoogleLogout } from "@react-oauth/google";
+import { googleLogout  } from "@react-oauth/google";
 
 export default function User({ onUserTap, onSettingTap, onLogoutTap }) {
   const user = useGlobalState((state) => state.user);
@@ -15,21 +15,14 @@ export default function User({ onUserTap, onSettingTap, onLogoutTap }) {
     return 'green';
   };
 
-  const { signOut } = useGoogleLogout({
-    onLogoutSuccess: () => {
-      console.log("User logged out from Google");
-      // After successful logout, reset login state and navigate to the login page
-      navigate("/login");
-    },
-    onFailure: (error) => {
-      console.error("Logout failed: ", error);
-    },
-  });
-
-  // Trigger signOut directly from onLogoutTap to handle Google logout
   const handleLogout = () => {
-    signOut();
-    // Call the onLogoutTap callback (if you want to trigger additional logout logic)
+    googleLogout(); // Gọi trực tiếp googleLogout
+    console.log("User logged out from Google");
+
+    // Điều hướng đến trang login
+    navigate("/login");
+
+    // Gọi callback nếu cần
     if (onLogoutTap) onLogoutTap();
   };
 

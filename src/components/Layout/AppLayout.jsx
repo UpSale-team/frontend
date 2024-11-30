@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "../Logo";
 import Navbar from "../Navbar";
 import User from "../User";
-import { logoutApi } from "../../apis/auth";
 import useNotification from "../../hooks/useNotification";
 
 const errorNotify = useNotification({ type: "error" });
@@ -23,18 +22,6 @@ export default function AppLayout({
   const navigate = useNavigate();
 
 
-  function handleLogout() {
-    // Logout
-    logoutApi({
-      onFail: (msg) => {
-        errorNotify(msg);
-      },
-      onSuccess: () => {
-        // Navigate to login page
-        navigate("/login");
-      },
-    });
-  }
 
   function handleNavigateToSettings() {
     navigate("/dashboard/setting");
