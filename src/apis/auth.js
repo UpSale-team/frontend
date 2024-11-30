@@ -37,28 +37,16 @@ export async function loginApi({ accessToken, onFail, onSuccess }) {
   }
 }
 
-export async function logoutApi({ onSuccess, onFail }) {
-  try {
-    // Gửi yêu cầu logout đến backend
-    const response = await apiHelper.post(apiUrls.logout);
-
-    // Kiểm tra phản hồi từ server
-    if (response?.status === 200 || response?.message?.includes("success")) {
-      // Xóa token khỏi cookie
-      removeCookie("token");
-
-      // Gọi callback onSuccess khi thành công
-      onSuccess();
-      return;
-    }
-
-    // Nếu phản hồi từ server không thành công, gọi callback onFail
-    onFail(response?.error || response?.detail || "Logout failed");
-  } catch (error) {
-    console.error("Logout error:", error);
-    onFail(error?.message || "An error occurred during logout");
+async function logoutApi() {
+  const response = await apiHelper.get(apiUrls.logout)
+  };
+  const data = await response.json();
+  if (data.status === 200) {
+      // Successfully logged out, now remove the token
+      localStorage.removeItem('access_token');  // Clear the token
+      window.location.href = "/login";  // Redirect to the login page
   }
-}
+
 
 export async function getCurrentUserApi({ user, onFail, onSuccess }) {
   if (user) {

@@ -1,21 +1,22 @@
-import { baseUrl, apiUrls } from './constants';
-
+// public/widget.js
 class ChatbotWidget {
   constructor(config) {
     this.config = config;
-    this.backendUrl = baseUrl;
+    this.backendUrl = 'https://hoangnt1209-upsalev1.hf.space/';
     this.sessionId = null;
     this.isOpen = false;
   }
 
   async init() {
+    
     if (!this.isValidDomain(window.location.hostname)) {
       console.error('Invalid Domain: Please enter a valid domain name');
       return;
     }
+    // Get or create session
     await this.initSession();
     
-    // Container setup remains same
+    // Create container div
     const container = document.createElement('div');
     container.id = 'chatbot-widget-container';
     container.style.cssText = `
@@ -26,7 +27,7 @@ class ChatbotWidget {
     `;
     document.body.appendChild(container);
 
-    // Button setup remains same
+    // Create toggle button
     const button = document.createElement('button');
     button.innerHTML = 'Chat with us';
     button.style.cssText = `
@@ -43,7 +44,7 @@ class ChatbotWidget {
     button.onclick = () => this.toggleWidget();
     container.appendChild(button);
 
-    // IFrame container setup remains same
+    // Create iframe container
     const iframeContainer = document.createElement('div');
     iframeContainer.id = 'chatbot-iframe-container';
     iframeContainer.style.cssText = `
@@ -61,6 +62,7 @@ class ChatbotWidget {
     `;
 
     const iframe = document.createElement('iframe');
+    // Update iframe source to use backend URL with params
     iframe.src = this.buildChatUrl();
     iframe.style.cssText = `
       width: 100%;
@@ -73,14 +75,15 @@ class ChatbotWidget {
   }
 
   isValidDomain(domain) {
-    const validDomains = ['127.0.0.1', 'localhost'];
+    // Add your domain validation logic here
+    const validDomains = ['127.0.0.1', 'localhost']; // Add '127.0.0.1' to valid domains
     return validDomains.includes(domain);
   }
 
   async initSession() {
     try {
       const response = await fetch(
-        `${this.backendUrl}${apiUrls.GetWidgetSessionId(this.config.widgetId)}`,
+        `${this.backendUrl}/apis/widgets/session/${this.config.widgetId}`,
         {
           headers: {
             'api-key': this.config.apiKey
@@ -95,7 +98,7 @@ class ChatbotWidget {
   }
 
   buildChatUrl() {
-    const url = new URL(`${this.backendUrl}${apiUrls.GetWidget(this.config.widgetId)}`);
+    const url = new URL(`${this.backendUrl}/apis/widgets/widget/${this.config.widgetId}`);
     url.searchParams.append('api_key', this.config.apiKey);
     if (this.sessionId) {
       url.searchParams.append('session_id', this.sessionId);

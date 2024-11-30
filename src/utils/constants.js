@@ -3,8 +3,8 @@
     "164749267745-pnokebu3ha37nbi853n7td3bnv8hsp8r.apps.googleusercontent.com";
 
   // export const baseUrl = "https://your-server-url.com";
-  export const baseUrl = "http://localhost:7860/";
-  // export const baseUrl = "https://hoangnt1209-upsalev1.hf.space/"
+  // export const baseUrl = "http://localhost:7860/";
+  export const baseUrl = "https://hoangnt1209-upsalev1.hf.space/"
 
   export const apiUrls = {
     // Auth

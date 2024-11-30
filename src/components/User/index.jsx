@@ -2,9 +2,36 @@ import { Avatar, Menu, Text, Title, Skeleton, Group, Badge } from "@mantine/core
 import { IconLogout, IconSettings, IconCalendar, IconCrown } from "@tabler/icons-react";
 import useGlobalState from "../../context/global";
 import appStrings from "../../utils/strings";
+import { useNavigate } from "react-router-dom";
+import { useGoogleLogout } from "@react-oauth/google";
 
 export default function User({ onUserTap, onSettingTap, onLogoutTap }) {
   const user = useGlobalState((state) => state.user);
+  const navigate = useNavigate();
+
+  const getMessageColor = (count) => {
+    if (count <= 1000) return 'red';
+    if (count <= 50000) return 'orange';
+    return 'green';
+  };
+
+  const { signOut } = useGoogleLogout({
+    onLogoutSuccess: () => {
+      console.log("User logged out from Google");
+      // After successful logout, reset login state and navigate to the login page
+      navigate("/login");
+    },
+    onFailure: (error) => {
+      console.error("Logout failed: ", error);
+    },
+  });
+
+  // Trigger signOut directly from onLogoutTap to handle Google logout
+  const handleLogout = () => {
+    signOut();
+    // Call the onLogoutTap callback (if you want to trigger additional logout logic)
+    if (onLogoutTap) onLogoutTap();
+  };
 
   const getPlanColor = (plan) => {
     switch (plan) {
@@ -43,23 +70,22 @@ export default function User({ onUserTap, onSettingTap, onLogoutTap }) {
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item>
-  <Group position="apart">
-    <Group>
-      <IconCrown size="1.2rem" />
-      <Text size="sm">Current Plan</Text>
-    </Group>
-    <Badge
-      variant="filled"
-      color={getPlanColor(user?.subscription)}
-    >
-      {user?.subscription || 'NO SUBSCRIPTION'}
-    </Badge>
-  </Group>
-</Menu.Item>
+          <Group position="apart">
+            <Group>
+              <IconCrown size="1.2rem" />
+              <Text size="sm">Current Plan</Text>
+            </Group>
+            <Badge
+              variant="filled"
+              color={getPlanColor(user?.subscription)}
+            >
+              {user?.subscription || 'NO SUBSCRIPTION'}
+            </Badge>
+          </Group>
+        </Menu.Item>
         {user?.plan_expiration && (
           <Menu.Item>
             <Group position="apart">
-              
               <Group>
                 <IconCalendar size="1.2rem" />
                 <Text size="sm">Plan Expires</Text>
@@ -68,7 +94,7 @@ export default function User({ onUserTap, onSettingTap, onLogoutTap }) {
                 <Text size="xs">
                   {new Date(user.plan_expiration).toLocaleDateString()}
                 </Text>
-                <Badge 
+                <Badge
                   size="sm"
                   variant="light"
                   color={getExpirationColor(daysRemaining)}
@@ -79,7 +105,23 @@ export default function User({ onUserTap, onSettingTap, onLogoutTap }) {
             </Group>
           </Menu.Item>
         )}
-
+         {user?.remaining_messages !== undefined && (
+        <Menu.Item>
+          <Group position="apart">
+            <Group>
+              <IconMessage size="1.2rem" />
+              <Text size="sm">Messages Left</Text>
+            </Group>
+            <Badge
+              size="sm"
+              variant="light"
+              color={getMessageColor(user.remaining_messages)}
+            >
+              {user.remaining_messages.toLocaleString()}
+            </Badge>
+          </Group>
+        </Menu.Item>
+      )}
         <Menu.Item
           leftSection={<IconSettings size="1rem" />}
           onClick={onSettingTap}
@@ -89,7 +131,7 @@ export default function User({ onUserTap, onSettingTap, onLogoutTap }) {
         <Menu.Item
           leftSection={<IconLogout size="1rem" />}
           color="red"
-          onClick={onLogoutTap}
+          onClick={handleLogout} // Call handleLogout to trigger signOut and additional logic
         >
           {appStrings.language.auth.logout}
         </Menu.Item>
